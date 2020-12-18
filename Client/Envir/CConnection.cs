@@ -4466,6 +4466,27 @@ namespace Client.Envir
         public void Process(S.JoinInstance p)
         {
         }
+
+        public void Process(S.CompanionPickupToggle p)
+        {
+            Tuple<ItemType, RequiredClass> tupleToggle = Tuple.Create(p.Type, p.Class);
+            if (GameScene.Game.CompanionForbiddenItems.Contains(tupleToggle))
+                GameScene.Game.CompanionForbiddenItems.Remove(tupleToggle);
+            else
+                GameScene.Game.CompanionForbiddenItems.Add(tupleToggle);
+
+            GameScene.Game.CompanionOptionsBox.Refresh();
+        }
+
+        public void Process(S.CompanionPickupGradeToggle p)
+        {
+            if (GameScene.Game.CompanionForbiddenGrades.Contains(p.Grade))
+                GameScene.Game.CompanionForbiddenGrades.Remove(p.Grade);
+            else
+                GameScene.Game.CompanionForbiddenGrades.Add(p.Grade);
+
+            GameScene.Game.CompanionOptionsBox.Refresh();
+        }
     }
 }
 

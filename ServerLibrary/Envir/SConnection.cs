@@ -1222,6 +1222,19 @@ namespace Server.Envir
 
             Player.JoinInstance(p);
         }
+
+        public void Process(C.CompanionPickupToggle p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.CompanionPickupToggle(p.Type, p.Class);
+        }
+        public void Process(C.CompanionPickupGradeToggle p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.CompanionPickupGradeToggle(p.Grade);
+        }
     }
 
 

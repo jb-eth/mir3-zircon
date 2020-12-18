@@ -1888,6 +1888,17 @@ namespace Client.Scenes.Views
             }
         }
 
+        public void UpdateDropFilters()
+        {
+            if (Config.HighlightedItems != string.Empty)
+            {
+                string[] items = Config.HighlightedItems.Split(',');
+                for (int i = 0; i < 10; i++)
+                {
+                    DropFiltersMap[i].TextBox.Text = items[i];
+                }
+            }
+        }
         public void UpdateStats()
         {
             foreach (KeyValuePair<Stat, DXLabel> pair in DisplayStats)
@@ -1968,7 +1979,7 @@ namespace Client.Scenes.Views
             }
 
             RemainingLabel.Text = MapObject.User.HermitPoints.ToString();
-
+            UpdateDropFilters();
         }
         #endregion
 

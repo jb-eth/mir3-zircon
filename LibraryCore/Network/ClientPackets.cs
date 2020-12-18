@@ -632,4 +632,14 @@ namespace Library.Network.ClientPackets
     {
         public int Index { get; set; }
     }
+
+    public sealed class CompanionPickupToggle : Packet
+    {
+        public ItemType Type { get; set; }
+        public RequiredClass Class { get; set; }
+    }
+    public sealed class CompanionPickupGradeToggle : Packet
+    {
+        public Rarity Grade { get; set; }
+    }
 }

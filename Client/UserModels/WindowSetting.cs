@@ -152,6 +152,7 @@ namespace Client.UserModels
         MagicBarBox,
         MessageBox,
         ItemAmountBox,
-        InputWindow
+        InputWindow,
+        CompanionOptions,
     }
 }

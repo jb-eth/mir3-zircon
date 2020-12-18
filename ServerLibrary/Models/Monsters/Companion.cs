@@ -173,6 +173,33 @@ namespace Server.Models.Monsters
             Teleport(CompanionOwner.CurrentMap, cell.Location);
         }
 
+        public bool MasterForbidsPickup(ItemCheck check)
+        {
+            ItemType type = ItemType.Nothing;
+            if (check.Info.Effect == ItemEffect.ItemPart && check.Item.Stats[Stat.ItemIndex] > 0)
+            {
+                type = SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).ItemType;
+
+                if (type == ItemType.Book)
+                {
+                    return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(type, SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).RequiredClass))
+                        || (CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity));
+                }
+                else
+                {
+                    return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(type, RequiredClass.None))
+                        || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity));
+                }
+            }
+
+            type = check.Info.ItemType;
+
+            if (type == ItemType.Book)
+                return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(check.Info.ItemType, check.Info.RequiredClass)) || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity));
+            else
+                return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(check.Info.ItemType, RequiredClass.None)) || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity));
+        }
+
         public override void ProcessSearch()
         {
             if (!CanMove || SEnvir.Now < SearchTime) return;
@@ -457,6 +484,7 @@ namespace Server.Models.Monsters
             foreach (ItemCheck check in checks)
             {
                 if ((check.Flags & UserItemFlags.QuestItem) == UserItemFlags.QuestItem) continue;
+                if (MasterForbidsPickup(check)) return false;
 
                 long count = check.Count;
 

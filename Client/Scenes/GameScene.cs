@@ -196,6 +196,7 @@ namespace Client.Scenes
         public FortuneCheckerDialog FortuneCheckerBox;
         public NPCWeaponCraftWindow NPCWeaponCraftBox;
         public NPCAccessoryRefineDialog NPCAccessoryRefineBox;
+        public CompanionOptionsDialog CompanionOptionsBox;
 
         public ClientUserItem[] Inventory = new ClientUserItem[Globals.InventorySize];
         public ClientUserItem[] Equipment = new ClientUserItem[Globals.EquipmentSize];
@@ -210,6 +211,8 @@ namespace Client.Scenes
         public Dictionary<ItemInfo, ClientFortuneInfo> FortuneDictionary = new Dictionary<ItemInfo, ClientFortuneInfo>();
 
         public Dictionary<CastleInfo, string> CastleOwners = new Dictionary<CastleInfo, string>();
+        public List<Tuple<ItemType, RequiredClass>> CompanionForbiddenItems = new List<Tuple<ItemType, RequiredClass>>();
+        public List<Rarity> CompanionForbiddenGrades = new List<Rarity>();
 
         public bool MoveFrame { get; set; }
         private DateTime MoveTime, OutputTime, ItemRefreshTime;
@@ -598,6 +601,11 @@ namespace Client.Scenes
                 Visible = false
             };
             CompanionBox = new CompanionDialog
+            {
+                Parent = this,
+                Visible = false,
+            };
+            CompanionOptionsBox = new CompanionOptionsDialog
             {
                 Parent = this,
                 Visible = false,

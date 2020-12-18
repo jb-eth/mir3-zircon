@@ -102,6 +102,15 @@ namespace Client.Scenes.Views
             };
             PickUpCheckBox.Location = new Point(ClientArea.Right - PickUpCheckBox.Size.Width +3, ClientArea.Y + 45);
 
+            DXButton ConfigButton = new DXButton
+            {
+                LibraryFile = LibraryFile.GameInter,
+                Index = 116,
+                Parent = this,
+            };
+            ConfigButton.Location = new Point(ClientArea.X + 2, ClientArea.Y + 5);
+            ConfigButton.MouseClick += (o, e) => GameScene.Game.CompanionOptionsBox.Visible = !GameScene.Game.CompanionOptionsBox.Visible;
+
             /*
             new DXLabel
             {
