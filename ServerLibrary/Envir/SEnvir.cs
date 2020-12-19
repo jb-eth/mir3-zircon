@@ -496,8 +496,8 @@ namespace Server.Envir
             LinkedListNode<CharacterInfo> node;
             while ((node = character.RankingNode.Previous) != null)
             {
-                if (node.Value.Level > character.Level) break;
-                if (node.Value.Level == character.Level && node.Value.Experience >= character.Experience) break;
+                if (node.Value.Level + 1000 * node.Value.Rebirth > character.Level + 1000 * character.Rebirth) break;
+                if (node.Value.Level + 1000 * node.Value.Rebirth == character.Level + 1000 * character.Rebirth && node.Value.Experience >= character.Experience) break;
 
                 changed = true;
 
