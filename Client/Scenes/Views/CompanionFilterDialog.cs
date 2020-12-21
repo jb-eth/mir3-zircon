@@ -157,6 +157,8 @@ namespace Client.Scenes.Views
                     continue;
                 }
 
+                if (item == "Nothing") item = "Misc.";
+
                 FilterType[itemType] = new DXCheckBox
                 {
                     Parent = this,
