@@ -467,6 +467,7 @@ namespace Server.Models.Monsters
             ItemType itemType;
             Rarity itemRarity;
             RequiredClass itemClass;
+            List<string> allClasses = new List<string>();
             List<string> listClass = CompanionOwner.FiltersClass.Split(',').ToList();
             List<string> listRarity = CompanionOwner.FiltersRarity.Split(',').ToList();
             List<string> listType = CompanionOwner.FiltersItemType.Split(',').ToList();
@@ -497,7 +498,33 @@ namespace Server.Models.Monsters
             }
             if (listClass.Count > 0)
             {
-                hasClass = itemClass == RequiredClass.All || listClass.Contains(itemClass.ToString());
+                switch (itemClass)
+                {
+                    case RequiredClass.All:
+                        allClasses.Add(RequiredClass.Assassin.ToString());
+                        allClasses.Add(RequiredClass.Warrior.ToString());
+                        allClasses.Add(RequiredClass.Wizard.ToString());
+                        allClasses.Add(RequiredClass.Taoist.ToString());
+                        break;
+                    case RequiredClass.WarWizTao:
+                        allClasses.Add(RequiredClass.Warrior.ToString());
+                        allClasses.Add(RequiredClass.Wizard.ToString());
+                        allClasses.Add(RequiredClass.Taoist.ToString());
+                        break;
+                    case RequiredClass.AssWar:
+                        allClasses.Add(RequiredClass.Assassin.ToString());
+                        allClasses.Add(RequiredClass.Warrior.ToString());
+                        break;
+                    case RequiredClass.WizTao:
+                        allClasses.Add(RequiredClass.Wizard.ToString());
+                        allClasses.Add(RequiredClass.Taoist.ToString());
+                        break;
+                    default:
+                        allClasses.Add(itemClass.ToString());
+                        break;
+                }
+                List<string> intersect = listClass.Intersect(allClasses).ToList();
+                hasClass = intersect.Count > 0;
             }
             return hasFilterType && hasRarity && hasClass;
         }
