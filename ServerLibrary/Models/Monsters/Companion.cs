@@ -468,10 +468,35 @@ namespace Server.Models.Monsters
             Rarity itemRarity;
             RequiredClass itemClass;
             List<string> allClasses = new List<string>();
-            List<string> listClass = CompanionOwner.FiltersClass.Split(',').ToList();
-            List<string> listRarity = CompanionOwner.FiltersRarity.Split(',').ToList();
-            List<string> listType = CompanionOwner.FiltersItemType.Split(',').ToList();
+            List<string> listClass;
+            List<string> listRarity;
+            List<string> listType;
             bool hasFilterType, hasRarity, hasClass;
+
+            if (CompanionOwner.FiltersClass.Trim() != String.Empty)
+            {
+                listClass = CompanionOwner.FiltersClass.Split(',').ToList();
+            }
+            else
+            {
+                listClass = new List<string>();
+            }
+            if (CompanionOwner.FiltersRarity.Trim() != String.Empty)
+            {
+                listRarity = CompanionOwner.FiltersRarity.Split(',').ToList();
+            }
+            else
+            {
+                listRarity = new List<string>();
+            }
+            if (CompanionOwner.FiltersItemType.Trim() != String.Empty)
+            {
+                listType = CompanionOwner.FiltersItemType.Split(',').ToList();
+            }
+            else
+            {
+                listType = new List<string>();
+            }
 
             hasFilterType = true;
             hasClass = true;
